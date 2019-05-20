@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Resident Details</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style type="text/css">
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: '/api/v1/resident/',
+            type: 'get',
+            success: function(response){
+                console.log(response)
+                console.log(response.results[0])
+                var tableBody="";
+                for(i=0; i<response.results.length; i++){
+                    var tableRow = "";
+                    tableRow += '<td>' + response.results[i]['id'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['name'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['email'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['mobile_number'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['active'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['owner'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['role'] + "</td>";
+                    tableBody = tableBody + "<tr>" + tableRow + "</tr>";
+                }
+                console.log(tableBody)
+                $('#bodyContainer').append(tableBody) 
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                $('#content').html(errorMsg);
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+    <div id="content">
+        <div class="page_top">
+            <h1>New resident</h1>
+            <div class="btns" >
+                <a href="add resident.html" >Add</a>
+            </div>
+            <div class="clearfix" ></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th> Resident id</th>
+                    <th>Userame</th>
+                    <th>Email-Id</th>
+                    <th>Mobile No.</th>
+                    <th>Active</th>
+                    <th>Owner</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="bodyContainer">
+                
+            </tbody>
+    </div>
+</body>
+</html> 

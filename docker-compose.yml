@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  web:
+    image: amcm-base
+    entrypoint: ['python', 'manage.py', 'runserver', '0.0.0.0:8000']
+    ports:
+      - "8000:8000"
+    links:
+      - mysqldb
+    depends_on:
+      - mysqldb
+    volumes:
+      - .:/code/
+    networks:
+      thanos:
+        ipv4_address: 173.27.0.4
+
+  mysqldb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=amcm123
+      - MYSQL_DATABASE=amcm
+      - MYSQL_USER=root
+    ports:
+      - "3306:3306"
+    networks:
+      thanos:
+        ipv4_address: 173.27.0.3
+
+networks:
+  thanos:
+    ipam:
+     config:
+      - subnet: 173.27.0.0/16
