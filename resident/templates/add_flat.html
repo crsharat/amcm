@@ -1,0 +1,106 @@
+<!-- START HEADER -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Add Flat</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+		$.getJSON("/api/v1/resident/all/", function(result) {
+		    var options = $("#resident");
+		    for(i=0; i <result.length; i++){
+	        	var optionbody = ";"
+	        	optionbody += "<option" + " value=" + result[i].id + ">" + result[i].full_name + "</option>"; 
+		    options.append(optionbody);
+		    }
+		});
+	</script>
+</head>
+<body>
+		
+		<h1>Add Flat</h1>
+		
+		<div class="page_cont">
+			<div class="InputFrm" >
+				<form action="" method="post" >
+					<div class="row">
+						<div class="col-md-4">
+							<div class="frmRow">
+								<div class="title" > Flat Details</div>
+							</div>
+							<div class="frmRow">
+								<div class="lab" >Flat No.</div>
+								<div class="val" >
+									<input type="text" class="required" id="flat_number" name="flatno" value="" />
+								</div>
+							</div>
+							<div class="frmRow">
+								<div class="lab" >BHK</div>
+								<div class="val" >
+									<input type="text" class="required" id="bhk" name="bhk" value=""/>
+								</div>
+							</div>
+							<div class="frmRow">
+								<div class="lab" >Sqft</div>
+								<div class="val" >
+									<input type="text" id="sqft" name="sqft" value="" />
+								</div>
+							</div>
+							<div class="frmRow">
+								<div class="lab" >Electricity no.</div>
+								<div class="val" >
+									<input type="text" id="elecno" name="elecno" value="" />
+								</div>
+							</div>
+							<div class="frmRow">
+								<div class="lab" >Ward No.</div>
+								<div class="val" >
+									<input type="text" id="wardno" name="wardno" value="" />
+								</div>
+							</div>
+							<div class="frmRow">
+								<div class="lab" >Select Resident</div>
+								<div class="val" >
+									<select id="resident">
+										<!-- <option>Populate here</option> -->
+									</select>
+								</div>
+							</div>
+						</div>									
+					</div>
+						
+					<button id="add_flat" >Save</button>
+				</form>
+				<script type="text/javascript" >
+					$('#add_flat').click(function(event){
+
+						event.preventDefault();
+					    var data = {};
+					    data.number = $('#flat_number').val();
+					    data.bhk = $('#bhk').val(); // in integer field
+					    data.square_feet = $('#sqft').val(); // in integer field
+					    data.elecno = $('#elecno').val();
+					    data.wardno = $('#wardno').val();
+					    data.resident = $('#resident').val();
+					    data.csrfmiddlewaretoken = '{{ csrf_token}}'
+					    $.ajax({
+					        type: "POST",
+					        url: "/api/v1/flat/",
+					        data: data,
+					        contentType: "application/x-www-form-urlencoded",
+					        dataType: "json",
+					        success: function(response){
+					            window.location.href = "/flats/";
+					        },
+					        failure: function(response) {
+					            console.log(response);
+					            alert(response);
+					        }
+					    });
+					});
+				</script>
+			</div>
+		</div>
+</body>
+</html>
+<!-- END FOOTER -->

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Add Payment</title> 
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script type="text/javascript">
+         $.getJSON("/api/v1/flat/all/", function(result) {
+             var options = $("#flat_number");
+             for(i=0; i <result.length; i++){
+               var optionbody = ";"
+               optionbody += "<option" + " value=" + result[i].id + ">" + result[i].number + "</option>"; 
+             options.append(optionbody);
+             }
+         });
+      </script>
+   </head>
+   <body>
+      <div class="main_mid" >
+         <div class="page">
+            <div class="page_cont">
+                  <form >
+                     <div class="row">
+                        <div class="col-md-4">
+                           <div class="frmRow">
+                              <div class="lab" >Select Flat</div>
+                              <div class="page_cont_sel">
+                                 <div class="page_cont_sel_bx">
+                                    <select id="flat_number" name="number">
+                                       <!-- <option>Populate here</option> -->
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <br>
+                           <div class="frmRow">
+                              <div class="lab" >Purpose</div>
+                              <div class="page_cont_sel">
+                                 <div class="page_cont_sel_bx">
+                                    <select align="left" id="purpose" name="frm_purpose" style="width:340px">
+                                       <option value="maintenance charge">Maintenance charge</option>
+                                       <option value="corpus charge">Corpus charge</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="frmRow">
+                              <div class="lab" >Month</div>
+                              <div class="page_cont_sel">
+                                 <div class="page_cont_sel_bx">
+                                    <select align="left" id="month" name="frm_month">
+                                       <option value="1">January</option>
+                                       <option value="2">February</option>
+                                       <option value="3">March</option>
+                                       <option value="4">April</option>
+                                       <option value="5">May</option>
+                                       <option value="6">June</option>
+                                       <option value="7">July</option>
+                                       <option value="8">August</option>
+                                       <option value="9">September</option>
+                                       <option value="10">October</option>
+                                       <option value="11">November</option>
+                                       <option value="12">December</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="frmRow">
+                              <div class="lab" >Year</div>
+                              <div class="page_cont_sel">
+                                 <div class="page_cont_sel_bx">
+                                    <select align="left" id="year" name="frm_year">
+                                       <option value="2019">2019</option>
+                                       <option value="2020">2020</option>
+                                       <option value="2021">2021</option>
+                                       <option value="2022">2022</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="frmRow">
+                              <div class="title">Details</div>
+                           </div>
+                           <div class="frmRow">
+                              <div class="lab">Mode of payment</div>
+                              <div class="page_cont_sel">
+                                 <div class="page_cont_sel_bx">
+                                    <select align="left" id="payment_method" name="frm_payment_method">
+                                       <option value="cash">Cash</option>
+                                       <option value="netbanking">Netbanking</option>
+                                       <option value="cheque">Cheque</option>
+                                       <option value="DD">DD</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <br>
+                           <div class="frmRow">
+                              <div class="lab">Bank</div>
+                              <div class="page_cont_sel">
+                                 <div class="page_cont_sel_bx">
+                                    <select align="left" id="bank" name="frm_bank">
+                                       <option value="HDFC">HDFC</option>
+                                       <option value="IOB">IOB</option>
+                                       <option value="ICICI">ICICI</option>
+                                       <option value="SBI">SBI</option>
+                                       <option value="BOI">BOI</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <br>
+                           <div class="frmRow">
+                              <div class="lab" ><br>Payment Reference</div>
+                              <div class="val" >
+                                 <input type="text" class="required" id="payment_ref" name="frm_pay_ref" value="" />
+                              </div>
+                           </div>
+                           <div class="frmRow">
+                              <div class="lab" >Amount</div>
+                              <div class="val" >
+                                 <input type="text" class="required" id="amount" name="frm_amt" value="" />
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="clearfix"></div>
+                     <button id="add_payment">Save</button>
+                  </form>
+            </div>
+         </div>
+      </div>
+      <!-- END CONTENT -->
+      <script type="text/javascript" >
+         $('#add_payment').click(function(event){
+               event.preventDefault();
+               var data = {};
+               data.flat = $('#flat_number').val();
+               data.amount = parseFloat($('#amount').val()).toFixed(2); // in decimal field
+               data.month = parseInt($('#month').val()); // integer field
+               data.year = parseInt($('#year').val()); // integer field
+               data.payment_method = $('#payment_method').val();
+               data.bank = $('#bank').val();
+               data.payment_ref = $('#payment_ref').val();
+               data.purpose = $('#purpose').val();
+               data.csrfmiddlewaretoken = '{{ csrf_token}}'
+               console.log(data);
+               var req_url = "/api/v1/payment/";
+               $.ajax({
+                        type: "POST",
+                        url: req_url,
+                        data: data,
+                        contentType: "application/x-www-form-urlencoded",
+                        dataType: "json",
+                        success: function(response) {
+                           console.log(response);
+                           window.location.href = "/payment/history/";
+                        },
+                        failure: function(errMsg) {
+                           alert(errMsg);
+}
+               });
+      	});
+      </script>
+   </body>
+</html>

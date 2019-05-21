@@ -1,10 +1,16 @@
-{% extends 'base.html' %}
-
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AMCM</title>
+</head>
 <body>
-  {% block pagecontent %}
-    <p>
-    </p>
-    {% include 'nav-bar.html' %} <!--Add this-->
-  {% endblock %}
+	<div id="menu">
+		<a href="/add/flat/">Add Flat</a>
+		<a href="/flats/">List Flat</a>
+		<a href="/add/resident/">Add Resident</a>
+		<a href="/residents/">List Residents</a>
+		<a href="/add/payment/">Add Payment</a>
+		<a href="/payment/history/">Add PaymentHistory</a>
+	</div>
 </body>
 </html>

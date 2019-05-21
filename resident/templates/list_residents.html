@@ -34,6 +34,7 @@
                     var tableRow = "";
                     tableRow += '<td>' + response.results[i]['id'] + "</td>";
                     tableRow += '<td>' + response.results[i]['name'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['flat'] + "</td>";
                     tableRow += '<td>' + response.results[i]['email'] + "</td>";
                     tableRow += '<td>' + response.results[i]['mobile_number'] + "</td>";
                     tableRow += '<td>' + response.results[i]['active'] + "</td>";
@@ -41,7 +42,6 @@
                     tableRow += '<td>' + response.results[i]['role'] + "</td>";
                     tableBody = tableBody + "<tr>" + tableRow + "</tr>";
                 }
-                console.log(tableBody)
                 $('#bodyContainer').append(tableBody) 
 
             },
@@ -56,17 +56,17 @@
 <body>
     <div id="content">
         <div class="page_top">
-            <h1>New resident</h1>
             <div class="btns" >
-                <a href="add resident.html" >Add</a>
+                <a href="/add/resident/">New resident</a>
             </div>
             <div class="clearfix" ></div>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th> Resident id</th>
+                    <th>Resident id</th>
                     <th>Userame</th>
+                    <th>Flat</th>
                     <th>Email-Id</th>
                     <th>Mobile No.</th>
                     <th>Active</th>

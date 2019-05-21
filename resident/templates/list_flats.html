@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Resident Details</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style type="text/css">
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: '/api/v1/flat/',
+            type: 'get',
+            success: function(response){
+                console.log(response)
+                console.log(response.results[0])
+                var tableBody="";
+                for(i=0; i<response.results.length; i++){
+                    var tableRow = "";
+                    tableRow += '<td>' + response.results[i]['number'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['resident_name'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['bhk'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['square_feet'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['elecno'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['wardno'] + "</td>";
+                    tableBody = tableBody + "<tr>" + tableRow + "</tr>";
+                }
+                console.log(tableBody)
+                $('#bodyContainer').append(tableBody) 
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                $('#content').html(errorMsg);
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+    <div id="content">
+        <div class="page_top">
+            <div class="btns" >
+                <a href="/add/flat/">Add Flat</a>
+            </div>
+            <div class="clearfix" ></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Resident</th>
+                    <th>BHK</th>
+                    <th>Square Feet</th>
+                    <th>Electrician Number</th>
+                    <th>Ward Number</th>
+                </tr>
+            </thead>
+            <tbody id="bodyContainer">
+                
+            </tbody>
+    </div>
+</body>
+</html> 

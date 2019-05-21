@@ -24,9 +24,16 @@ SECRET_KEY = '927_sngr65$pgoc)r*5uvd)qqu_)58hgxs5%38189i=199%1ap'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = 'resident.Resident'
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+ACCOUNT_ADAPTER = 'resident.adapter.SimpleAdapter'
+SOCIALACCOUNT_ADAPTER = 'resident.adapter.AutoSignupAdapter'
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+CLIENT_ID = os.environ['CLIENT_ID']
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
 
 # Application definition
 
@@ -37,10 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'resident.apps.ResidentConfig',
     'rest_framework',
     'django_extensions',
     'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static") 
 ALLOWED_HOSTS = ['localhost', '0.0.0.0']
 GRAPH_MODELS = {
   'all_applications': False,

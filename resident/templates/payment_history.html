@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Payment History</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style type="text/css">
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: '/api/v1/payment/',
+            type: 'get',
+            success: function(response){
+                console.log(response)
+                console.log(response.results[0])
+                var tableBody="";
+                for(i=0; i<response.results.length; i++){
+                    var tableRow = "";
+                    tableRow += '<td>' + response.results[i]['resident_name'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['flat_name'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['amount'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['payed_on'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['month'] + "-" + response.results[i]["year"] + "</td>";
+                    tableRow += '<td>' + response.results[i]['payment_method'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['bank'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['payment_ref'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['receipt_number'] + "</td>";
+                    tableRow += '<td>' + response.results[i]['purpose'] + "</td>";
+                    tableBody = tableBody + "<tr>" + tableRow + "</tr>";
+                }
+                console.log(tableBody)
+                $('#bodyContainer').append(tableBody) 
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                $('#content').html(errorMsg);
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+    <div id="content">
+        <div class="page_top">
+            <div class="btns" >
+                <a href="/add/payment/">Add Payment</a>
+            </div>
+            <div class="clearfix" ></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Resident Name</th>
+                    <th>Flat</th>
+                    <th>Amount</th>
+                    <th>Payed On</th>
+                    <th>Cycle Month</th>
+                    <th>Payment Method</th>
+                    <th>Bank</th>
+                    <th>Payment Reference</th>
+                    <th>Reciept Number</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody id="bodyContainer">
+                
+            </tbody>
+    </div>
+</body>
+</html> 

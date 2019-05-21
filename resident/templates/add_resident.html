@@ -1,205 +1,212 @@
-START HEADER -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-     <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <title>Add Resident</title>
     <script type="text/javascript">
+    	$.getJSON("/api/v1/city/", function(result) {
+    	    var options = $("#city");
+    	    for(i=0; i <result.length; i++){
+                var optionbody = ";"
+                optionbody += "<option" + " value=" + result[i].id + ">" + result[i].name + "</option>"; 
+    	    options.append(optionbody);
+    	    }
+    	});
+        $.getJSON("/api/v1/state/", function(result) {
+            var options = $("#state");
+            for(i=0; i <result.results.length; i++){
+                var optionbody = ";"
+                optionbody += "<option" + " value=" + result.results[i].id + ">" + result.results[i].name + "</option>"; 
+            options.append(optionbody);
+            }
+        });
+        $.getJSON("/api/v1/country/", function(result) {
+            var options = $("#country");
+            for(i=0; i <result.results.length; i++){
+                var optionbody = ";"
+                optionbody += "<option" + " value=" + result.results[i].id + ">" + result.results[i].name + "</option>"; 
+            options.append(optionbody);
+            }
+        });
     </script>
 </head>
+
 <body>
-	
-		<!-- END HEADER -->
-		
-		<!-- START CONTENT -->
-		<div class="main_mid" >		
-		
-			<div class="page">
-				<div class="page_cont">
-					<div class="InputFrm" >
-						<form action="" method="post" >
-							<div class="row">
-								<div class="col-md-3">
-									<div class="frmRow">
-										<div class="title" >Basic Details</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >First Name</div>
-										<div class="val" >
-											<input type="text" class="required" id="first_name" name="frm_name" value="" />
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Last Name</div>
-										<div class="val" >
-											<input type="text" class="required" id="last_name" name="frm_name" value="" />
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >DOB</div>
-										<div class="val" >
-											<input type="text" id="dob" name="dob" value="" />
-										</div>
-									</div>
-									
-								</div>
-								
-								<div class="col-md-3">
-									<div class="frmRow">
-										<div class="title" >Communication Address</div>
-									</div>
-									
-									<div class="frmRow">
-										<div class="lab" >Mob no.</div>
-										<div class="val" >
-											<input type="text" id="mobile_number" name="frm_com_po" value="" />
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Phone No.</div>
-										<div class="val" >
-											<input type="text" id="phone_number" name="frm_com_po" value="" />
-										</div>
-									</div>
-									
-									<div class="frmRow">
-										<div class="lab" >Email</div>
-										<div class="val" >
-											<input type="text" id="email" name="frm_email" value="" />
-										</div>
-									</div>
-									<select id="city_dropdown">
-										
-									</select>
-									<div class="frmRow">
-										<div class="lab" >City</div>
-										<div class="val" >
-											<input type="text" id="city" name="frm_city" value="" />
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >State</div>
-										<div class="val" >
-											<input type="text" id="state" name="frm_state" value="" />
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Country</div>
-										<div class="val" >
-											<input type="text" id="country" name="frm_country" value="" />
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-3">
-									<div class="frmRow">
-										<div class="title" >Login Details</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Username</div>
-										<div class="val" >
-											<input type="text" id="username" name="frm_username" value="" />
-										</div>
-									</div>
-									<!-- <div class="frmRow">
-										<div class="lab" >Password</div>
-										<div class="val" >
-											<input type="text" id="password" name="frm_password" value="" />
-										</div>
-									</div> -->
-								</div>
-							
-								<div class="col-md-3">
-									<div class="frmRow">
-										<div class="title" >Other Details</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Active</div>
-										<div class="val" >
-											<input type="radio" id="frm_active_y" name="frm_active" value="Y" checked />
-											<label for="frm_active_y" >Yes</label>
-											<input type="radio" id="frm_active_n" name="frm_active" value="N" />
-											<label for="frm_active_n" >No</label>
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Owner</div>
-										<div class="val" >
-											<input type="radio" id="frm_owner_y" name="frm_owner" value="Y" checked />
-											<label for="frm_active_y" >Yes</label>
-											<input type="radio" id="frm_owner_n" name="frm_owner" value="N" />
-											<label for="frm_active_n" >No</label>
-										</div>
-									</div>
-									<div class="frmRow">
-										<div class="lab" >Role</div>
-										<div class="val" >
-											<input type="radio" id="frm_resident" name="frm_role" value="resident" checked />
-											<label for="frm_active_y" >resident</label>
-											<input type="radio" id="frm_cashier" name="frm_role" value="cashier" />
-											<label for="frm_active_n" >cashier</label>
-											<input type="radio" id="frm_admin" name="frm_role" value="admin" />
-											<label for="frm_active_n" >admin</label>
-										</div>
-									</div>
-								</div>
-							</div>
-							<button type="submit" class="btn btn-save" name="frm_save" >Save</button>
-							<div class="clearfix"></div>
-						</form>
-					</div>
+    <div class="main_mid">
+        <div class="page">
+            <div class="page_cont">
+                <div class="InputFrm">
+                    <form id="add_resident_form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="frmRow">
+                                    <div class="title">Basic Details</div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">First Name</div>
+                                    <div class="val">
+                                        <input type="text" class="required" id="first_name" name="first_name" value="" />
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Last Name</div>
+                                    <div class="val">
+                                        <input type="text" class="required" id="last_name" name="last_name" value="" />
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">DOB</div>
+                                    <div class="val">
+                                        <input type="date" id="dob" name="dob" value="" required pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"/>
+                                    </div>
+                                </div>
 
-					<script type="text/javascript" >
-						$(#suit).click(function(){          
+                            </div>
 
-						    var data = {};
-						    data.first_name = $('#first_name').val();
-						    data.last_name = $('#last_name').val();
-						    data.dob = $('#dob').val();
-						    data.mobile_number = $('#mobile_number').val();
-						    data.phone_number = $('#phone_number').val();
-						    data.email = $('#email').val();
-						    data.city = $('#city').val();
-						    data.state = $('#state').val();
-						    data.country = $('#state').val();
-						    data.username = $('#username').val();
-						    data.active = $('#active').val();
-						    data.owner = $('#owner').val();
-						    data.role = $('#role').val();
+                            <div class="col-md-3">
+                                <div class="frmRow">
+                                    <div class="title">Communication Address</div>
+                                </div>
 
-						    $.ajax({
-						        type: "POST",
-						        url: "/api/v1/resident/",
-						        data: data,
-						        contentType: "application/json; charset=utf-8",
-						        dataType: "json",
-						        success: function(data){
-						            window.location.href = "/residents/";
-						        },
-						        failure: function(errMsg) {
-						            alert(errMsg);
-						        }
-						    });
-						});
-					</script>
-				</div>
-			</div>
-		</div>
-		<!-- END CONTENT -->
-		
-	<!-- START FOOTER -->
-	<div class="clearfix" ></div>
-</div>
-<div class="clearfix" ></div>
-<div class="main_footer">
-	<div class="copy" >
-		<p>Copyright &copy; 2019 AMCM</p>
-	</div>
-</div>
+                                <div class="frmRow">
+                                    <div class="lab">Mob no.</div>
+                                    <div class="val">
+                                        <input type="text" id="mobile_number" name="mobile_number" value="" />
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Phone No.</div>
+                                    <div class="val">
+                                        <input type="text" id="phone_number" name="phone_number" value="" />
+                                    </div>
+                                </div>
+
+                                <div class="frmRow">
+                                    <div class="lab">Email</div>
+                                    <div class="val">
+                                        <input type="text" id="email" name="email" value="" />
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">City</div>
+                                    <div class="val">
+		                                <select id="city" name="city">
+		                                </select>
+                                        <!-- <input type="text" id="city" name="frm_city" value="" /> -->
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">State</div>
+                                    <div class="val">
+                                        <select id="state" name="state">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Country</div>
+                                    <div class="val">
+                                       <select id="country" name="country">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="frmRow">
+                                    <div class="title">Login Details</div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Username</div>
+                                    <div class="val">
+                                        <input type="text" id="username" name="username" value="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="frmRow">
+                                    <div class="title">Other Details</div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Active</div>
+                                    <div class="val">
+                                        <input type="radio" id="frm_active_y" name="active" value="True" checked />
+                                        <label for="frm_active_y">Yes</label>
+                                        <input type="radio" id="frm_active_n" name="active" value="False" />
+                                        <label for="frm_active_n">No</label>
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Owner</div>
+                                    <div class="val">
+                                        <input type="radio" id="frm_owner_y" name="owner" value="True" checked />
+                                        <label for="frm_active_y">Yes</label>
+                                        <input type="radio" id="frm_owner_n" name="owner" value="False" />
+                                        <label for="frm_active_n">No</label>
+                                    </div>
+                                </div>
+                                <div class="frmRow">
+                                    <div class="lab">Role</div>
+                                    <div class="val">
+                                        <input type="radio" id="frm_resident" name="role" value="resident" checked />
+                                        <label for="frm_active_y">resident</label>
+                                        <input type="radio" id="frm_cashier" name="role" value="cashier" />
+                                        <label for="frm_active_n">cashier</label>
+                                        <input type="radio" id="frm_admin" name="role" value="admin" />
+                                        <label for="frm_active_n">admin</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-save" id="add_resident">Save</button>
+                    </form>
+                </div>
+
+                <script type="text/javascript">
+                    $('#add_resident').click(function(event) {
+                        event.preventDefault();
+                        var data = {};
+                        data.first_name = $('#first_name').val();
+                        data.last_name = $('#last_name').val();
+                        data.dob = $('#dob').val();
+                        data.mobile_number = parseInt($('#mobile_number').val());
+                        data.phone_number = parseInt($('#phone_number').val());
+                        data.email = $('#email').val();
+                        data.city = $('#city').val();
+                        data.state = $('#state').val();
+                        data.country = $('#state').val();
+                        data.username = $('#username').val();
+                        data.active = $('#active').val();
+                        data.owner = $('#owner').val();
+                        data.role = $('#role').val();
+                        data.csrfmiddlewaretoken = '{{ csrf_token}}'
+                        var req_url = "/api/v1/resident/";
+                        $.ajax({
+                            type: "POST",
+                            url: req_url,
+                            data: data,
+                            contentType: "application/x-www-form-urlencoded",
+                            dataType: "json",
+                            success: function(response) {
+                                console.log(response);
+                                window.location.href = "/residents/";
+                            },
+                            failure: function(errMsg) {
+                                alert(errMsg);
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>
-<!-- END FOOTER

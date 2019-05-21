@@ -8,6 +8,9 @@ services:
       - "8000:8000"
     links:
       - mysqldb
+    environment:
+      - CLIENT_ID=415679551223-fs77aodb6s9crsdt12gsbp8foatl1sr8.apps.googleusercontent.com
+      - CLIENT_SECRET=UbEwjo8fuiBKy5s-T7-RjrnQ
     depends_on:
       - mysqldb
     volumes:
